@@ -52,8 +52,13 @@ body {
     --discord-gray: 222 14% 24%;
     --discord-text: 0 0% 86%;
     --discord-timestamp: 220 5% 49%;
-    --discord-sidebar-color: 216 7.25% 13.53%;
-    --discord-plus-icon-color: 138.68 47.32% 43.92%;
+    --discord-secondary-color: 216 7.25% 13.53%;
+    --discord-green-color: 138.68 47.32% 43.92%;
+    --discord-third-color: 222.86 6.93% 19.8%;
+    --discord-fourth-color: 222 8.06% 24.31%;
+    --discord-fifth-color: 210 2.94% 86.67%;
+    --discord-sixth-color: 216 3.7% 73.53%;
+    --discord-seventh-color: 213.33 4.15% 57.45%;
   }
 
   .dark {
