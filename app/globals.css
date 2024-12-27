@@ -15,7 +15,7 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 226 55% 16%;
     --primary: 226 55% 44%;
-    --primary-foreground: 210 40% 98%;
+    --primary-foreground: 228 46% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 226 55% 25%;
     --muted: 210 40% 96.1%;
@@ -23,7 +23,7 @@ body {
     --accent: 210 40% 96.1%;
     --accent-foreground: 226 55% 25%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 220 44% 96%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 226 55% 44%;
@@ -34,20 +34,28 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    --brand-25: 228 46% 98%; 
-    --brand-50: 220 44% 96%; 
-    --brand-100: 218 50% 93%; 
-    --brand-200: 215 54% 84%; 
-    --brand-300: 213 56% 75%; 
-    --brand-400: 211 57% 66%; 
-    --brand-500: 210 58% 61%; 
-    --brand-600: 209 59% 58%; 
-    --brand-700: 226 55% 44%; 
-    --brand-800: 226 55% 35%; 
-    --brand-900: 226 55% 25%; 
+    --brand-25: 228 46% 98%;
+    --brand-50: 220 44% 96%;
+    --brand-100: 218 50% 93%;
+    --brand-200: 215 54% 84%;
+    --brand-300: 213 56% 75%;
+    --brand-400: 211 57% 66%;
+    --brand-500: 210 58% 61%;
+    --brand-600: 209 59% 58%;
+    --brand-700: 226 55% 44%;
+    --brand-800: 226 55% 35%;
+    --brand-900: 226 55% 25%;
     --brand-950: 226 55% 16%;
+
+    --discord-brand-color: 231 89% 67%;
+    --discord-background: 222 14% 24%;
+    --discord-gray: 222 14% 24%;
+    --discord-text: 0 0% 86%;
+    --discord-timestamp: 220 5% 49%;
+    --discord-sidebar-color: 216 7.25% 13.53%;
+    --discord-plus-icon-color: 138.68 47.32% 43.92%;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -81,5 +89,11 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .arrow-hover {
+    @apply size-4 shrink-0 text-white transition-transform duration-300 ease-in-out group-hover:translate-x-[2px];
   }
 }

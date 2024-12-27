@@ -4,9 +4,10 @@ import { SignOutButton } from "@clerk/nextjs"
 import MaxWidthWrapper from "@/components/max-width-wrapper"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { Separator } from "./ui/separator"
 
 export const Navbar = () => {
-  const user = true
+  const user = false
 
   return (
     <nav className="sticky z-[100] h-16 inset-x-0 top-0 w-full border-b border-gray-200 bg-white/80 backdrop-blur-lg transition-all">
@@ -34,7 +35,39 @@ export const Navbar = () => {
                   Dashboard <ArrowRight className="ml-1.5 size-4" />
                 </Link>
               </>
-            ) : null}
+            ) : (
+              <>
+                <Link
+                  href={"/dashboard"}
+                  className={buttonVariants({
+                    size: "sm",
+                    variant: "ghost",
+                  })}
+                >
+                  Pricing
+                </Link>
+                <Link
+                  href={"/sign-in"}
+                  className={buttonVariants({
+                    size: "sm",
+                    variant: "ghost",
+                  })}
+                >
+                  Sign in
+                </Link>
+                <Separator orientation="vertical" className="h-[75%]" />
+
+                <Link
+                  href={"/sign-up"}
+                  className={buttonVariants({
+                    size: "sm",
+                    className: "flex items-center gap-1.5 group",
+                  })}
+                >
+                  Sign-up <ArrowRight className="arrow-hover" />
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </MaxWidthWrapper>
