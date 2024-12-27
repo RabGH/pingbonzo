@@ -41,7 +41,10 @@ export default function Home() {
               ))}
             </ul>
             <div className="w-full max-w-80">
-              <ShinyButton className="relative z-10 h-14 w-full text-base shadow-lg transition-shadow duration-300 hover:shadow-xl">
+              <ShinyButton
+                href="/sign-up"
+                className="relative z-10 h-14 w-full text-base shadow-lg transition-shadow duration-300 hover:shadow-xl"
+              >
                 Start For Free Today
               </ShinyButton>
             </div>
