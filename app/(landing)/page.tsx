@@ -89,6 +89,19 @@ export default function Home() {
                     badgeText="Revenue"
                     badgeColor="#faa61a"
                   />
+                  <DiscordMessage
+                    avatarSrc={"/brand-asset-profile-picture.png"}
+                    avatarAlt={"PingBonzo Avatar"}
+                    username={"PingBonzo"}
+                    timestamp={"Today at 5:33am"}
+                    title={"🚀 Revenue Milestone Achieved"}
+                    content={{
+                      recuringRevenue: "$5,000 USD",
+                      growth: "+8.2%",
+                    }}
+                    badgeText="Milestone"
+                    badgeColor="#5865f2"
+                  />
                 </AnimatedList>
               </MockDiscordUI>
             </div>
