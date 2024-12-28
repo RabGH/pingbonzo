@@ -79,8 +79,12 @@ export default {
           "third-color": "hsl(var(--discord-third-color))",
           "fourth-color": "hsl(var(--discord-fourth-color))",
           "fifth-color": "hsl(var(--discord-fifth-color))",
-          "sixth-color": "hsl(var(--discord-sixth-color))",
+          "offwhite-color": "hsl(var(--discord-offwhite-color))",
           "seventh-color": "hsl(var(--discord-seventh-color))",
+          "eighth-color": "hsl(var(--discord-eighth-color))",
+          "ninth-color": "hsl(var(--discord-ninth-color))",
+          "tenth-color": "hsl(var(--discord-tenth-color))",
+          "eleventh-color": "hsl(var(--discord-eleventh-color))",
         },
       },
       borderRadius: {

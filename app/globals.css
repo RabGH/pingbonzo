@@ -57,8 +57,12 @@ body {
     --discord-third-color: 222.86 6.93% 19.8%;
     --discord-fourth-color: 222 8.06% 24.31%;
     --discord-fifth-color: 210 2.94% 86.67%;
-    --discord-sixth-color: 216 3.7% 73.53%;
+    --discord-offwhite-color: 216 3.7% 73.53%;
     --discord-seventh-color: 213.33 4.15% 57.45%;
+    --discord-eighth-color: 220 6.82% 17.25%;
+    --discord-ninth-color: 220 7.69% 22.94%;
+    --discord-tenth-color: 218.18 7.91% 27.25%;
+    --discord-eleventh-color: 218.18 4.6% 46.86%;
   }
 
   .dark {
