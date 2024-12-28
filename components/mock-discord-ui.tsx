@@ -108,9 +108,9 @@ export const MockDiscordUI = ({ children }: { children: ReactNode }) => {
             </p>
           </div>
           <div className="flex items-center space-x-2">
-            <Mic className="size-5 text-discord-offwhite-color hover:text-white cursor-pointer transition-all duration-200" />
-            <Headphones className="size-5 text-discord-offwhite-color hover:text-white cursor-pointer transition-all duration-200" />
-            <Cog className="size-5 text-discord-offwhite-color hover:text-white cursor-pointer transition-all duration-200" />
+            <Mic className="size-5 text-discord-offwhite-color hover:text-white cursor-not-allowed transition-all duration-200" />
+            <Headphones className="size-5 text-discord-offwhite-color hover:text-white cursor-not-allowed transition-all duration-200" />
+            <Cog className="size-5 text-discord-offwhite-color hover:text-white cursor-not-allowed transition-all duration-200" />
           </div>
         </div>
       </div>
