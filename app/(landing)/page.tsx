@@ -1,4 +1,4 @@
-import { Check } from "lucide-react"
+import { Check, Star } from "lucide-react"
 import Image from "next/image"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
@@ -9,6 +9,7 @@ import MaxWidthWrapper from "@/components/max-width-wrapper"
 import { MockDiscordUI } from "@/components/mock-discord-ui"
 import { ShinyButton } from "@/components/shiny-button"
 import { AnimatedList } from "@/components/ui/animated-list"
+import { Icons } from "@/components/icons"
 
 // border radius of bento grid. tracking-tight good with headlines, text-fontsize/lineheight, max-lg apply from smallest to lg, cqw container query width = the border radius shrinks and grows with the parent. lg in the first decorative div, then we add 1px borderRadius to the content container
 
@@ -135,7 +136,9 @@ export default function Home() {
             <h2 className="text-center text-base/7 font-semibold text-brand-600">
               Intuitive Monitoring
             </h2>
-            <Heading>Stay ahead with real-time insights</Heading>
+            <Heading className="text-center">
+              Stay ahead with real-time insights
+            </Heading>
           </div>
 
           <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
@@ -279,7 +282,85 @@ export default function Home() {
           </div>
         </MaxWidthWrapper>
       </section>
-      <section></section>
+
+      <section className="relative py-24 sm:py-32 bg-white">
+        <MaxWidthWrapper className="flex flex-col items-center gap-16 sm:gap-20">
+          <div>
+            <h2 className="text-center text-base/7 font-semibold text-brand-600">
+              Real-World Experiences
+            </h2>
+            <Heading className="text-center">What out customers say</Heading>
+          </div>
+          <div className="mx-auto grid max-w-2xl grid-cols-1 px-4 lg:mx-0 lg:max-w-none lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-200">
+            {/* first customer review */}
+            <div className="flex flex-auto flex-col gap-4 bg-brand-25 p-6 sm:p-8 lg:p-16 rounded-t-[2rem] lg:rounded-tr-none lg:rounded-l-[2rem]">
+              <div className="flex gap-0.5 mb-2 justify-center lg:justify-start">
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+              </div>
+
+              <p className="text-base sm:text-lg lg:text-lg/8 font-medium tracking-tight text-brand-950 text-center lg:text-left text-pretty">
+                PingBonzo has been a game-changer for me. I&apos;ve been using
+                it for two months now and seeing sales pop up in real-time is
+                super satisfying.
+              </p>
+
+              <div className="flex flex-col justify-center lg:justify-start sm:flex-row items-center sm:items-start gap-4 mt-2">
+                <Image
+                  src={"/user-2.png"}
+                  className="rounded-full object-cover"
+                  alt={"Random user"}
+                  width={48}
+                  height={48}
+                />
+                <div className="flex flex-col items-center sm:items-start">
+                  <p className="font-semibold flex items-center">
+                    Julia Lusso{" "}
+                    <Icons.verificationBadge className="size-4 inline-block ml-1.5" />
+                  </p>
+                  <p className="text-sm text-gray-600">@jLusso</p>
+                </div>
+              </div>
+            </div>
+
+            {/* second customer review */}
+            <div className="flex flex-auto flex-col gap-4 bg-brand-25 p-6 sm:p-8 lg:p-16 rounded-b-[2rem] lg:rounded-bl-none lg:rounded-r-[2rem]">
+              <div className="flex gap-0.5 mb-2 justify-center lg:justify-start">
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+                <Star className="size-5 text-brand-600 fill-brand-600" />
+              </div>
+
+              <p className="text-base sm:text-lg lg:text-lg/8 font-medium tracking-tight text-brand-950 text-center lg:text-left text-pretty">
+                PingBonzo&apos;s been paying off for our SaaS. Nice to have a
+                simple to see how we&apos;re doing day-to-day. Definitely makes
+                our lives easier.
+              </p>
+
+              <div className="flex flex-col justify-center lg:justify-start sm:flex-row items-center sm:items-start gap-4 mt-2">
+                <Image
+                  src={"/user-1.png"}
+                  className="rounded-full object-cover"
+                  alt={"Random user"}
+                  width={48}
+                  height={48}
+                />
+                <div className="flex flex-col items-center sm:items-start">
+                  <p className="font-semibold flex items-center">
+                    Boluya Jorge{" "}
+                    <Icons.verificationBadge className="size-4 inline-block ml-1.5" />
+                  </p>
+                  <p className="text-sm text-gray-600">@Boljor</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </MaxWidthWrapper>
+      </section>
     </>
   )
 }
