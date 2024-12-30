@@ -1,6 +1,6 @@
 import { Context } from "hono"
-import { Procedure } from "./procedure"
-import { Bindings } from "../env"
+import { Procedure } from "@/server/__internals/procedure"
+import { Bindings } from "@/server/env"
 
 const baseProcedure = new Procedure()
 

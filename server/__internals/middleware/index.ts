@@ -4,7 +4,7 @@
  */
 
 import { MiddlewareHandler } from "hono"
-import { parseSuperJSON } from "./utils"
+import { parseSuperJSON } from "@/server/__internals/middleware/utils"
 
 /**
  * Middleware to parse GET-request using SuperJSON

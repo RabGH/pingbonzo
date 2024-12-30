@@ -70,7 +70,7 @@ const authMiddleware = j.middleware(async ({ c, next }) => {
 
 /**
  * Public (unauthenticated) procedures
- * .use(extendedDatabaseMiddleware)
+ *
  * This is the base piece you use to build new queries and mutations on your API.
  */
 export const baseProcedure = j.procedure
