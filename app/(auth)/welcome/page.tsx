@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import { LucideProps } from "lucide-react"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { useUser } from "@clerk/nextjs"
 
 import { LoadingSpinner } from "@/components/loading-spinner"
 import { Heading } from "@/components/heading"
@@ -13,13 +14,22 @@ import { client } from "@/lib/client"
 
 const Page = () => {
   const router = useRouter()
+  const { isSignedIn, isLoaded } = useUser()
+
+  useEffect(() => {
+    // Only redirect if Clerk has loaded and the user is not signed in
+    // TODO: Added code
+    if (isLoaded && !isSignedIn) {
+      router.push("/sign-in")
+    }
+  }, [isLoaded, isSignedIn, router])
 
   const { data } = useQuery({
+    queryKey: ["get-database-sync-status"],
     queryFn: async () => {
       const res = await client.auth.getDatabaseSyncStatus.$get()
       return await res.json()
     },
-    queryKey: ["get-database-sync-status"],
     refetchInterval: (query) => {
       return query.state.data?.isSynced ? false : 1000
     },

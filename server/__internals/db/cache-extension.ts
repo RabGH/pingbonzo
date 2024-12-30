@@ -13,6 +13,7 @@ function isSuperJSONResult(obj: any): obj is SuperJSONResult {
 /**
  * The Prisma extension to provide built-in caching with Upstash Redis
  */
+const DEFAULT_TTL = 3600 // 1 hour in seconds
 
 export const cacheExtension = ({ redis }: { redis: Redis }) => {
   return Prisma.defineExtension({
@@ -47,9 +48,9 @@ export const cacheExtension = ({ redis }: { redis: Redis }) => {
             if (cache.ttl) {
               await redis.set(cache.id, serializedResult, { ex: cache.ttl })
             } else {
-              await redis.set(cache.id, serializedResult)
+              await redis.set(cache.id, serializedResult, { ex: DEFAULT_TTL })
             }
-          }
+          } // set default caching time
 
           return result
         },
@@ -81,9 +82,9 @@ export const cacheExtension = ({ redis }: { redis: Redis }) => {
             if (cache.ttl) {
               await redis.set(cache.id, serializedResult, { ex: cache.ttl })
             } else {
-              await redis.set(cache.id, serializedResult)
+              await redis.set(cache.id, serializedResult, { ex: DEFAULT_TTL })
             }
-          }
+          } // set default caching time
 
           return result
         },
@@ -115,9 +116,9 @@ export const cacheExtension = ({ redis }: { redis: Redis }) => {
             if (cache.ttl) {
               await redis.set(cache.id, serializedResult, { ex: cache.ttl })
             } else {
-              await redis.set(cache.id, serializedResult)
+              await redis.set(cache.id, serializedResult, { ex: DEFAULT_TTL })
             }
-          }
+          } // set default caching time
 
           return result
         },
