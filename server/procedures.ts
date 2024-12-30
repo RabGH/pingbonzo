@@ -3,12 +3,12 @@ import { PrismaNeon } from "@prisma/adapter-neon"
 import { PrismaClient } from "@prisma/client"
 import { Redis } from "@upstash/redis/cloudflare"
 import { env } from "hono/adapter"
-import { cacheExtension } from "@/server/__internals/db/cache-extension"
 import { currentUser } from "@clerk/nextjs/server"
 import { HTTPException } from "hono/http-exception"
 
 import { db } from "@/db"
 import { j } from "@/server/__internals/j"
+import { cacheExtension } from "@/server/__internals/db/cache-extension"
 
 /**
  * Middleware for providing a built-in cache with your Prisma database.
@@ -20,7 +20,7 @@ const extendedDatabaseMiddleware = j.middleware(async ({ c, next }) => {
   const variables = env(c)
 
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: variables.DATABASE_URL,
   })
 
   const adapter = new PrismaNeon(pool)
