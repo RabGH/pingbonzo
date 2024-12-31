@@ -146,21 +146,19 @@ export const DashboardPageContent = () => {
               {deletingCategory}&quot;? This action cannot be undone.
             </p>
           </div>
+
           <div className="flex justify-end space-x-3 pt-4 border-t">
-            <Button
-              variant={"outline"}
-              onClick={() => setDeletingCategory(null)}
-            >
+            <Button variant="outline" onClick={() => setDeletingCategory(null)}>
               Cancel
             </Button>
             <Button
-              variant={"destructive"}
+              variant="destructive"
               onClick={() =>
                 deletingCategory && deleteCategory(deletingCategory)
               }
               disabled={isDeletingCategory}
             >
-              Delete
+              {isDeletingCategory ? "Deleting..." : "Delete"}
             </Button>
           </div>
         </div>
