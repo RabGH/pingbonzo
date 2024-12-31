@@ -2,23 +2,20 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { ArrowRight, BarChart2, Clock, Database, Trash2 } from "lucide-react"
 import { format, formatDistanceToNow } from "date-fns"
 
 import { client } from "@/lib/client"
-// import { useConfirm } from "@/hooks/use-confirm"
 
 import { LoadingSpinner } from "@/components/loading-spinner"
 
 import { Button, buttonVariants } from "@/components/ui/button"
+import { Modal } from "@/components/ui/modal"
 
 export const DashboardPageContent = () => {
-  // const [ConfirmDialog, confirm] = useConfirm(
-  //   "Are you sure?",
-  //   "You are about to delete this category"
-  // )
   const [deletingCategory, setDeletingCategory] = useState<string | null>(null)
+  const queryClient = useQueryClient()
 
   const { data: categories, isPending: isEventCategoriesPending } = useQuery({
     queryKey: ["user-event-categories"],
@@ -28,6 +25,18 @@ export const DashboardPageContent = () => {
       return categories
     },
   })
+
+  const { mutate: deleteCategory, isPending: isDeletingCategory } = useMutation(
+    {
+      mutationFn: async (name: string) => {
+        await client.category.deleteCategory.$post({ name })
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["user-event-categories"] })
+        setDeletingCategory(null)
+      },
+    }
+  )
 
   if (isEventCategoriesPending) {
     return (
@@ -43,7 +52,6 @@ export const DashboardPageContent = () => {
 
   return (
     <>
-      {/* <ConfirmDialog /> */}
       <ul className="grid max-w-6xl grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {categories.map((category) => (
           <li
@@ -113,11 +121,6 @@ export const DashboardPageContent = () => {
                   size={"sm"}
                   className="text-gray-500 hover:text-red-600 transition-colors duration-300"
                   aria-label={`Delete ${category.name} category`}
-                  // onClick={async () => {
-                  //   const ok = await confirm()
-                  //   if (ok) {
-                  //   }
-                  // }}
                   onClick={() => setDeletingCategory(category.name)}
                 >
                   <Trash2 className="size-5" />
@@ -127,6 +130,41 @@ export const DashboardPageContent = () => {
           </li>
         ))}
       </ul>
+
+      <Modal
+        showModal={!!deletingCategory}
+        setShowModal={() => setDeletingCategory(null)}
+        className="max-w-md p-8"
+      >
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-lg/7 font-medium tracking-tight text-gray-950">
+              Delete Category
+            </h2>
+            <p className="text-sm/6 text-gray-600">
+              Are you sure you want to delete the category &quot;
+              {deletingCategory}&quot;? This action cannot be undone.
+            </p>
+          </div>
+          <div className="flex justify-end space-x-3 pt-4 border-t">
+            <Button
+              variant={"outline"}
+              onClick={() => setDeletingCategory(null)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant={"destructive"}
+              onClick={() =>
+                deletingCategory && deleteCategory(deletingCategory)
+              }
+              disabled={isDeletingCategory}
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </>
   )
 }

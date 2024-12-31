@@ -2,6 +2,7 @@ import { db } from "@/db"
 import { router } from "@/server/__internals/router"
 import { privateProcedure } from "@/server/procedures"
 import { startOfMonth } from "date-fns"
+import { z } from "zod"
 
 export const catgoryRouter = router({
   // Fetch categories for the authenticated user, selecting specific fields and ordering them by updatedAt in descending order
@@ -80,8 +81,15 @@ export const catgoryRouter = router({
 
     return c.superjson({ categories: categoriesWithCounts })
   }),
+  // this is how we implement zod for post / edit / delete mutate
+  deleteCategory: privateProcedure
+    .input(z.object({ name: z.string() }))
+    .mutation(async ({ c, ctx, input }) => {
+      const { name } = input
+
+      await db.eventCategory.delete({
+        where: { name_userId: { name, userId: ctx.user.id } },
+      })
+      return c.json({ success: true }, 200)
+    }),
 })
-
-// fields Attribute: The fields attribute in the Event model is of type Json, which allows it to store arbitrary JSON data. The select: { fields: true } clause specifies that only this attribute should be included in the result.
-
-// Set: A Set in JavaScript/TypeScript is a collection of unique values. Using a Set ensures that each field name is counted only once, even if it appears in multiple events.
