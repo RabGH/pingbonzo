@@ -64,6 +64,9 @@ const CreateEventCategoryModal = ({ children }: { children: ReactNode }) => {
         queryClient.invalidateQueries({ queryKey: ["user-event-categories"] })
         setIsOpen(false)
       },
+      onError: () => {
+        console.log("error while creating category")
+      },
     })
 
   const {

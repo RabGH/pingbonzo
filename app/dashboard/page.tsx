@@ -5,7 +5,7 @@ import { db } from "@/db"
 import { DashboardPage } from "@/components/dashboard-page"
 
 import { DashboardPageContent } from "./dashboard-page-content"
-import CreateEventCategoryModal from "@/components/create-event-category-modal"
+import CreateEventCategoryModal from "@/features/create-event-category-modal"
 import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 
