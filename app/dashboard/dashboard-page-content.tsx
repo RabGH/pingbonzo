@@ -12,6 +12,7 @@ import { LoadingSpinner } from "@/components/loading-spinner"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Modal } from "@/components/ui/modal"
+import { DashboardEmptyState } from "./dashboard-empty-state"
 
 export const DashboardPageContent = () => {
   const [deletingCategory, setDeletingCategory] = useState<string | null>(null)
@@ -47,7 +48,7 @@ export const DashboardPageContent = () => {
   }
 
   if (!categories || categories.length === 0) {
-    return <div>No Categories</div>
+    return <DashboardEmptyState />
   }
 
   return (

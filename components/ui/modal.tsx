@@ -1,10 +1,14 @@
 import { Dispatch, ReactNode, SetStateAction } from "react"
 import { Drawer } from "vaul"
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { cn } from "@/lib/utils"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { cn } from "@/lib/utils"
 
 interface ModalProps {
   children?: ReactNode
@@ -60,16 +64,12 @@ export const Modal = ({
             <div className="sticky top-0 z-20 flex w-full items-center justify-center rounded-t-[10px] bg-inherit">
               <div className="my-3 h-1 w-12 rounded-full bg-gray-300" />
             </div>
-
+            {/* Mobile-specific content */}
             {children}
           </Drawer.Content>
         </Drawer.Portal>
       </Drawer.Root>
     )
-  }
-
-  if (desktopOnly && isMobile) {
-    return null
   }
 
   return (
@@ -82,9 +82,10 @@ export const Modal = ({
       }}
     >
       <DialogContent>
-        <VisuallyHidden>
+        <DialogHeader className="sr-only">
           <DialogTitle className="sr-only">Dialog</DialogTitle>
-        </VisuallyHidden>
+        </DialogHeader>
+        {/* Desktop/Tablet-specific content */}
         {children}
       </DialogContent>
     </Dialog>
