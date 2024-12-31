@@ -1,8 +1,13 @@
-import { db } from "@/db"
-import { router } from "@/server/__internals/router"
-import { privateProcedure } from "@/server/procedures"
 import { startOfMonth } from "date-fns"
 import { z } from "zod"
+
+import { router } from "@/server/__internals/router"
+import { privateProcedure } from "@/server/procedures"
+
+import { CATEGORY_NAME_VALIDATOR } from "@/lib/validators/category-validator"
+
+import { db } from "@/db"
+import { parseColor } from "@/lib/utils"
 
 export const catgoryRouter = router({
   // Fetch categories for the authenticated user, selecting specific fields and ordering them by updatedAt in descending order
@@ -91,5 +96,34 @@ export const catgoryRouter = router({
         where: { name_userId: { name, userId: ctx.user.id } },
       })
       return c.json({ success: true }, 200)
+    }),
+
+  createEventCategory: privateProcedure
+    .input(
+      z.object({
+        name: CATEGORY_NAME_VALIDATOR,
+        color: z
+          .string()
+          .min(1, "Color is required")
+          .regex(/^#[0-9A-F]{6}$/i, "Invalid color format."),
+        emoji: z.string().emoji("Invalid emoji").optional(),
+      })
+    )
+    .mutation(async ({ c, ctx, input }) => {
+      const { user } = ctx
+      const { color, name, emoji } = input
+
+      // TODO: Add paid plan logic
+
+      const eventCategory = await db.eventCategory.create({
+        data: {
+          name: name.toLowerCase(),
+          color: parseColor(color),
+          emoji,
+          userId: user.id,
+        },
+      })
+
+      return c.json({ eventCategory })
     }),
 })
