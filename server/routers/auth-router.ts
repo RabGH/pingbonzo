@@ -15,6 +15,7 @@ export const authRouter = router({
 
     const user = await db.user.findFirst({
       where: { externalId: auth.id },
+      // cache: { id: `user-${auth.id}`, ttl: 3600 } // TTL in seconds
     })
 
     if (!user) {
