@@ -51,7 +51,15 @@ const EMOJI_OPTIONS = [
   { emoji: "🔔", label: "Notification" },
 ]
 
-const CreateEventCategoryModal = ({ children }: { children: ReactNode }) => {
+interface CreateEventCategoryModelProps {
+  containerClassName?: string
+  children: ReactNode
+}
+
+const CreateEventCategoryModal = ({
+  children,
+  containerClassName,
+}: CreateEventCategoryModelProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
 
@@ -88,7 +96,9 @@ const CreateEventCategoryModal = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <div onClick={() => setIsOpen(true)}>{children}</div>
+      <div onClick={() => setIsOpen(true)} className={containerClassName}>
+        {children}
+      </div>
 
       <Modal
         className="max-w-xl p-8"
@@ -137,7 +147,7 @@ const CreateEventCategoryModal = ({ children }: { children: ReactNode }) => {
                         : "ring-transparent hover:scale-105"
                     )}
                     onClick={() => setValue("color", premadeColor)}
-                  ></button>
+                  />
                 ))}
               </div>
               {errors.color ? (
