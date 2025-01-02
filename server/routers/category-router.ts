@@ -3,6 +3,7 @@ import { z } from "zod"
 
 import { router } from "@/server/__internals/router"
 import { privateProcedure } from "@/server/procedures"
+import { HTTPException } from "hono/http-exception"
 
 import { CATEGORY_NAME_VALIDATOR } from "@/lib/validators/category-validator"
 
@@ -84,7 +85,7 @@ export const catgoryRouter = router({
       })
     )
 
-    return c.superjson({ categories: categoriesWithCounts })
+    return c.superjson({ categories: categoriesWithCounts }) // working with dates, superjson helps
   }),
   // this is how we implement zod for post / edit / delete mutate
   deleteCategory: privateProcedure
@@ -141,4 +142,31 @@ export const catgoryRouter = router({
 
     return c.json({ success: true, count: categories.count })
   }),
+
+  pollCategory: privateProcedure
+    .input(z.object({ name: CATEGORY_NAME_VALIDATOR }))
+    .query(async ({ c, ctx, input }) => {
+      const { name } = input // we get the input from the params in the frontend to keep polling for data
+
+      const category = await db.eventCategory.findUnique({
+        where: { name_userId: { name, userId: ctx.user.id } },
+        include: {
+          _count: {
+            select: {
+              events: true,
+            },
+          },
+        },
+      })
+
+      if (!category) {
+        throw new HTTPException(404, {
+          message: `Category "${name}" not found`,
+        })
+      }
+
+      const hasEvents = category._count.events > 0
+
+      return c.json({ hasEvents })
+    }),
 })
