@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { currentUser } from "@clerk/nextjs/server"
 
-import { DashboardPage } from "@/components/dashboard-page"
+import { DashboardPage } from "@/features/dashboard-page"
 import { CategoryPageContent } from "./category-page-content"
 import { db } from "@/db"
 

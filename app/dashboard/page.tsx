@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs/server"
 
 import { db } from "@/db"
-import { DashboardPage } from "@/components/dashboard-page"
+import { DashboardPage } from "@/features/dashboard-page"
 
 import { DashboardPageContent } from "./dashboard-page-content"
 import CreateEventCategoryModal from "@/features/create-event-category-modal"
