@@ -89,6 +89,26 @@ export const EmptyCategoryState = ({
           {codeSnippet}
         </SyntaxHighlighter>
       </div>
+
+      <div className="mt-8 flex flex-col items-center space-x-2">
+        <div className="flex gap-2 items-center">
+          <div className="size-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-sm text-gray-600">
+            Listening to incoming events...
+          </span>
+        </div>
+        <p className="text-sm/6 text-gray-600 mt-2">
+          Need help? Check out our{" "}
+          <a href="#" className="text-blue-600 hover:underline">
+            documentation
+          </a>{" "}
+          or{" "}
+          <a href="#" className="text-blue-600 hover:underline">
+            contact support
+          </a>
+          .
+        </p>
+      </div>
     </Card>
   )
 }
