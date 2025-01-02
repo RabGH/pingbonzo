@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 }
 
+// signInFallbackRedirectUrl="/welcome"
+// signUpFallbackRedirectUrl="/welcome"
 export default function RootLayout({
   children,
 }: Readonly<{
