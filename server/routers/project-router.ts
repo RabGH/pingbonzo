@@ -68,4 +68,10 @@ export const projectRouter = router({
 
       return c.json({ success: true })
     }),
+
+  getUserApiKey: privateProcedure.query(async ({ c, ctx }) => {
+    const { user } = ctx
+
+    return c.json({ apiKey: user.apiKey })
+  }),
 })

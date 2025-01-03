@@ -20,10 +20,10 @@ const SettingsPage = async () => {
   if (!user) {
     redirect("/sign-in")
   }
-
+  // apiKey={user.apiKey ?? ""}
   return (
     <DashboardPage title="API Key Settings">
-      <ApiKeySettings apiKey={user.apiKey ?? ""} />
+      <ApiKeySettings />
     </DashboardPage>
   )
 }

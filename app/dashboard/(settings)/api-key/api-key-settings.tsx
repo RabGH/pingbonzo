@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   CheckIcon,
   ClipboardIcon,
@@ -16,28 +16,38 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { client } from "@/lib/client"
 import { generateCuid } from "@/lib/utils"
-
-const ApiKeySettings = ({ apiKey: initialApiKey }: { apiKey: string }) => {
+// { apiKey: initialApiKey }: { apiKey: string }
+const ApiKeySettings = () => {
   const [copySuccess, setCopySuccess] = React.useState(false)
-  const [apiKey, setApiKey] = React.useState(initialApiKey)
   const [isApiKeyVisible, setIsApiKeyVisible] = React.useState(false)
 
   const queryClient = useQueryClient()
   const newApiKey = generateCuid()
+
+  // Fetch the user's API key
+  const { data: apiKey, isFetching } = useQuery({
+    queryKey: ["user-api-key"],
+    queryFn: async () => {
+      const res = await client.project.getUserApiKey.$get()
+      const data = await res.json()
+      return data.apiKey
+    },
+  })
+  const [currentApiKey, setCurrentApiKey] = React.useState<string>(apiKey || "")
+
   const { mutate: regenerateApiKey, isPending } = useMutation({
-    mutationKey: ["regenerate-api-key"],
     mutationFn: async (apiKey: string) => {
       const res = await client.project.setApiKey.$post({ apiKey })
       return await res.json()
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["regenerate-api-key"] })
+      queryClient.invalidateQueries({ queryKey: ["user-api-key"] })
     },
   })
 
   const copyApiKey = () => {
     if (typeof navigator !== "undefined") {
-      navigator.clipboard.writeText(apiKey)
+      navigator.clipboard.writeText(currentApiKey)
       setCopySuccess(true)
       setTimeout(() => setCopySuccess(false), 2000)
     } else {
@@ -55,12 +65,15 @@ const ApiKeySettings = ({ apiKey: initialApiKey }: { apiKey: string }) => {
         <Label>Your API Key</Label>
         <div className="mt-1 relative">
           <Input
-            type={isApiKeyVisible ? "text" : "password"}
-            value={apiKey}
+            type={"text"}
+            value={
+              isFetching
+                ? "Loading..."
+                : isApiKeyVisible
+                  ? apiKey || ""
+                  : (apiKey || "").replace(/./g, "•")
+            }
             readOnly
-            onChange={(e) => {
-              setApiKey(e.target.value)
-            }}
           />
           <div className="absolute space-x-0.5 inset-y-0 right-1 flex items-center">
             <Button
