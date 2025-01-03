@@ -5,7 +5,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { LucideProps } from "lucide-react"
 import { useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useUser } from "@clerk/nextjs"
 
 import { LoadingSpinner } from "@/components/loading-spinner"
@@ -15,8 +15,8 @@ import { client } from "@/lib/client"
 const WelcomePage = () => {
   const router = useRouter()
   const { isSignedIn, isLoaded } = useUser()
-  const searchParams = useSearchParams()
-  const intent = searchParams.get("intent")
+  // const searchParams = useSearchParams()
+  // const intent = searchParams.get("intent")
 
   useEffect(() => {
     // Only redirect if Clerk has loaded and the user is not signed in
@@ -37,11 +37,15 @@ const WelcomePage = () => {
     },
   })
 
+  // useEffect(() => {
+  //   if (data?.isSynced) {
+  //     router.push(intent ? `/dashboard?intent=${intent}` : "/dashboard");
+  //   }
+  // }, [data, router, intent]);
+
   useEffect(() => {
-    if (data?.isSynced) {
-      router.push(intent ? `/dashboard?intent=${intent}` : "/dashboard")
-    }
-  }, [data, router, intent])
+    if (data?.isSynced) router.push("/dashboard")
+  }, [data, router])
 
   return (
     <div className="flex w-full flex-1 items-center justify-center px-4">
