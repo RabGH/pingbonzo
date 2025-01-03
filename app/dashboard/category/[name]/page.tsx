@@ -6,14 +6,12 @@ import { CategoryPageContent } from "./category-page-content"
 import { db } from "@/db"
 
 interface PageProps {
-  params: {
-    name: string | string[] | undefined
-  }
+  params: Promise<{ name: string | undefined }>
 }
 
 const Page = async ({ params }: PageProps) => {
   const { name } = await params
-  if (typeof name !== "string") return notFound()
+  if (typeof params !== "string") return notFound()
 
   const auth = await currentUser()
 
@@ -30,7 +28,7 @@ const Page = async ({ params }: PageProps) => {
   const category = await db.eventCategory.findUnique({
     where: {
       name_userId: {
-        name: name,
+        name: name ?? "",
         userId: user.id,
       },
     },

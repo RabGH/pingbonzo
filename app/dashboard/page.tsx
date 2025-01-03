@@ -13,13 +13,12 @@ import { PaymentSuccessModal } from "@/features/payment-success-modal"
 import { Button } from "@/components/ui/button"
 
 interface MainDashboardPageProps {
-  searchParams: {
-    [key: string]: string | string[] | undefined
-  }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
 // dashboard server page
 const MainDashboardPage = async ({ searchParams }: MainDashboardPageProps) => {
+  const { intent, success } = await searchParams
   const auth = await currentUser()
 
   if (!auth) {
@@ -34,8 +33,6 @@ const MainDashboardPage = async ({ searchParams }: MainDashboardPageProps) => {
     redirect("/sign-in")
   }
 
-  const intent = searchParams.intent
-
   if (intent === "upgrade") {
     const session = await createCheckoutSession({
       userEmail: user.email,
@@ -46,8 +43,6 @@ const MainDashboardPage = async ({ searchParams }: MainDashboardPageProps) => {
       return redirect(session.url)
     }
   }
-
-  const success = searchParams.success
 
   return (
     <>
