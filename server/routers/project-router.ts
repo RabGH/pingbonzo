@@ -5,7 +5,6 @@ import { router } from "@/server/__internals/router"
 import { privateProcedure } from "@/server/procedures"
 
 import { FREE_QUOTA, PRO_QUOTA } from "@/config"
-import { db } from "@/db"
 
 export const projectRouter = router({
   getUsage: privateProcedure.query(async ({ c, ctx }) => {
@@ -13,7 +12,7 @@ export const projectRouter = router({
 
     const currentDate = startOfMonth(new Date())
 
-    const quota = await db.quota.findFirst({
+    const quota = await ctx.db.quota.findFirst({
       where: {
         userId: user.id,
         year: currentDate.getFullYear(),
@@ -23,7 +22,7 @@ export const projectRouter = router({
 
     const eventCount = quota?.count ?? 0 // nullish coalescing operator
 
-    const categoryCount = await db.eventCategory.count({
+    const categoryCount = await ctx.db.eventCategory.count({
       where: {
         userId: user.id,
       },
@@ -48,7 +47,7 @@ export const projectRouter = router({
       const { user } = ctx
       const { discordId } = input
 
-      await db.user.update({
+      await ctx.db.user.update({
         where: { id: user.id },
         data: { discordId },
       })
@@ -62,7 +61,7 @@ export const projectRouter = router({
       const { user } = ctx
       const { apiKey } = input
 
-      await db.user.update({
+      await ctx.db.user.update({
         where: { id: user.id },
         data: { apiKey },
       })

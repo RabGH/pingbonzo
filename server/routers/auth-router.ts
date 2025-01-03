@@ -1,4 +1,3 @@
-import { db } from "@/db"
 import { router } from "@/server/__internals/router"
 import { publicProcedure } from "@/server/procedures"
 import { currentUser } from "@clerk/nextjs/server"
@@ -13,13 +12,13 @@ export const authRouter = router({
       return c.json({ isSynced: false })
     }
 
-    const user = await db.user.findFirst({
+    const user = await ctx.db.user.findFirst({
       where: { externalId: auth.id },
       // cache: { id: `user-${auth.id}`, ttl: 3600 } // TTL in seconds
     })
 
     if (!user) {
-      await db.user.create({
+      await ctx.db.user.create({
         data: {
           quotaLimit: 100,
           externalId: auth.id,
