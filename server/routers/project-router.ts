@@ -11,7 +11,7 @@ export const projectRouter = router({
 
     const currentDate = startOfMonth(new Date())
 
-    const quota = await db.quota.findFirst({
+    const quota = await ctx.db.quota.findFirst({
       where: {
         userId: user.id,
         year: currentDate.getFullYear(),

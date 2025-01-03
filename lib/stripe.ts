@@ -13,21 +13,27 @@ export const createCheckoutSession = async ({
   userEmail: string
   userId: string
 }) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        price: "price_1QcwyEPV8ypyaNXi1yhurZH1",
-        quantity: 1,
+  try {
+    console.log("Creating checkout session for user:", userId)
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: "price_1QcwyEPV8ypyaNXi1yhurZH1",
+          quantity: 1,
+        },
+      ], // what is the user buying
+      mode: "payment",
+      success_url: `${process.env.NEXT_PUBLIC_URL}/dashboard?success=true`,
+      cancel_url: `${process.env.NEXT_PUBLIC_URL}/pricing`,
+      customer_email: userEmail,
+      metadata: {
+        userId,
       },
-    ], // what is the user buying
-    mode: "payment",
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard?success=true`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/pricing`,
-    customer_email: userEmail,
-    metadata: {
-      userId,
-    },
-  })
-
-  return session
+    })
+    console.log("Checkout session created:", session.id)
+    return session
+  } catch (error) {
+    console.error("Error creating checkout session:", error)
+    throw new Error("Failed to create checkout session")
+  }
 }
