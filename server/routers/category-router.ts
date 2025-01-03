@@ -181,7 +181,7 @@ export const catgoryRouter = router({
     )
     .query(async ({ c, ctx, input }) => {
       const { limit, name, page, timeRange } = input
-
+      // We are destrcuturing the input to get the limit, name, page and timeRange. Which we set using zod
       const now = new Date()
 
       let startDate: Date
@@ -197,12 +197,12 @@ export const catgoryRouter = router({
           startDate = startOfMonth(now)
           break
       }
-
+      // we await promise.all to get all the querries at the sametime, efficient
       const [events, eventsCount, uniqueFieldCount] = await Promise.all([
         ctx.db.event.findMany({
           where: {
             eventCategory: { name, userId: ctx.user.id },
-            createdAt: { gte: startDate },
+            createdAt: { gte: startDate }, // We use createdAt here to get the events created after the startDate
           },
           skip: (page - 1) * limit,
           take: limit,

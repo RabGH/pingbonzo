@@ -5,16 +5,18 @@
 import { useQuery } from "@tanstack/react-query"
 import { LucideProps } from "lucide-react"
 import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useUser } from "@clerk/nextjs"
 
 import { LoadingSpinner } from "@/components/loading-spinner"
 import { Heading } from "@/components/heading"
 import { client } from "@/lib/client"
 
-const Page = () => {
+const WelcomePage = () => {
   const router = useRouter()
   const { isSignedIn, isLoaded } = useUser()
+  const searchParams = useSearchParams()
+  const intent = searchParams.get("intent")
 
   useEffect(() => {
     // Only redirect if Clerk has loaded and the user is not signed in
@@ -36,8 +38,10 @@ const Page = () => {
   })
 
   useEffect(() => {
-    if (data?.isSynced) router.push("/dashboard")
-  }, [data, router])
+    if (data?.isSynced) {
+      router.push(intent ? `/dashboard?intent=${intent}` : "/dashboard")
+    }
+  }, [data, router, intent])
 
   return (
     <div className="flex w-full flex-1 items-center justify-center px-4">
@@ -153,4 +157,4 @@ const BackgroundPattern = (props: LucideProps) => {
   )
 }
 
-export default Page
+export default WelcomePage
