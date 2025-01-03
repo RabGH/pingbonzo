@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 
 // dashboard server page
-const DashboardSPage = async () => {
+const MainDashboardPage = async () => {
   const auth = await currentUser()
 
   if (!auth) {
@@ -42,4 +42,4 @@ const DashboardSPage = async () => {
   )
 }
 
-export default DashboardSPage
+export default MainDashboardPage

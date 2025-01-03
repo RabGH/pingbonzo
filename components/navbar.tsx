@@ -1,11 +1,12 @@
 import Link from "next/link"
-import { SignOutButton } from "@clerk/nextjs"
 import { currentUser } from "@clerk/nextjs/server"
+
+import { SignOutButton } from "@clerk/nextjs"
+import { ArrowRight } from "lucide-react"
 
 import MaxWidthWrapper from "@/components/max-width-wrapper"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
-import { Separator } from "./ui/separator"
+import { Separator } from "@/components/ui/separator"
 
 export const Navbar = async () => {
   const user = await currentUser()
@@ -39,7 +40,7 @@ export const Navbar = async () => {
             ) : (
               <>
                 <Link
-                  href={"/dashboard"}
+                  href={"/pricing"}
                   className={buttonVariants({
                     size: "sm",
                     variant: "ghost",
