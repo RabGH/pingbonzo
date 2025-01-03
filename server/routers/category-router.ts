@@ -13,7 +13,7 @@ import { parseColor } from "@/lib/utils"
 export const catgoryRouter = router({
   // Fetch categories for the authenticated user, selecting specific fields and ordering them by updatedAt in descending order
   getEventCategories: privateProcedure.query(async ({ c, ctx }) => {
-    const categories = await ctx.db.eventCategory.findMany({
+    const categories = await db.eventCategory.findMany({
       where: {
         userId: ctx.user.id, // Only fetch categories belonging to the authenticated user
       },
@@ -69,7 +69,7 @@ export const catgoryRouter = router({
             },
           }),
           // last pinged event lastPing
-          ctx.db.event.findFirst({
+          db.event.findFirst({
             where: { eventCategory: { id: category.id } },
             orderBy: { createdAt: "desc" },
             select: { createdAt: true },
@@ -93,7 +93,7 @@ export const catgoryRouter = router({
     .mutation(async ({ c, ctx, input }) => {
       const { name } = input
 
-      await ctx.db.eventCategory.delete({
+      await db.eventCategory.delete({
         where: { name_userId: { name, userId: ctx.user.id } },
       })
       return c.json({ success: true }, 200)
@@ -116,7 +116,7 @@ export const catgoryRouter = router({
 
       // TODO: Add paid plan logic
 
-      const eventCategory = await ctx.db.eventCategory.create({
+      const eventCategory = await db.eventCategory.create({
         data: {
           name: name.toLowerCase(),
           color: parseColor(color),
@@ -129,7 +129,7 @@ export const catgoryRouter = router({
     }),
 
   insertQuickStartCategories: privateProcedure.mutation(async ({ ctx, c }) => {
-    const categories = await ctx.db.eventCategory.createMany({
+    const categories = await db.eventCategory.createMany({
       data: [
         { name: "bug", emoji: "🐛", color: 0xff6b6b },
         { name: "sale", emoji: "💰", color: 0xffeb3b },
@@ -199,7 +199,7 @@ export const catgoryRouter = router({
       }
       // we await promise.all to get all the querries at the sametime, efficient
       const [events, eventsCount, uniqueFieldCount] = await Promise.all([
-        ctx.db.event.findMany({
+        db.event.findMany({
           where: {
             eventCategory: { name, userId: ctx.user.id },
             createdAt: { gte: startDate }, // We use createdAt here to get the events created after the startDate
@@ -208,13 +208,13 @@ export const catgoryRouter = router({
           take: limit,
           orderBy: { createdAt: "desc" },
         }),
-        ctx.db.event.count({
+        db.event.count({
           where: {
             eventCategory: { name, userId: ctx.user.id },
             createdAt: { gte: startDate },
           },
         }),
-        ctx.db.event
+        db.event
           .findMany({
             where: {
               eventCategory: { name, userId: ctx.user.id },
